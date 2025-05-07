@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NFC.Application\NFC.Application.csproj" />
+    <ProjectReference Include="..\NFC.Infrastructure\NFC.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
