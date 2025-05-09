@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NFC.Domain.Models
+namespace NFC.Application.Interfaces
 {
-    class Admin
+   public interface IDbIntializer
     {
+        Task IntializerAsync();
     }
 }

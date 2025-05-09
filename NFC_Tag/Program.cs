@@ -1,5 +1,5 @@
-
 using Microsoft.EntityFrameworkCore;
+using NFC.Application.MappingProfiles;
 using NFC.Infrastructure.Data;
 
 namespace NFC_Tag
@@ -20,6 +20,9 @@ namespace NFC_Tag
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
             });
+
+            builder.Services.AddAutoMapper(typeof(ChemicalItemProfile).Assembly);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
