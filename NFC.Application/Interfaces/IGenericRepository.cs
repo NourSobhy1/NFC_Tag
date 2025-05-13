@@ -9,7 +9,7 @@ namespace NFC.Application.Interfaces
     public interface IGenericRepository<TEntity> where TEntity: class
     {
         Task<TEntity?> GetByIdAsync(Guid id);
-        Task<IEnumerable<TEntity>> GetAllAsync(bool asNoTracking);
+        Task<IEnumerable<TEntity>> GetAllAsync(bool asNoTracking = false);
         Task AddAsync(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);

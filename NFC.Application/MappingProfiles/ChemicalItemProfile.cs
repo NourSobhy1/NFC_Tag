@@ -18,6 +18,11 @@ namespace NFC.Application.MappingProfiles
                     dest => dest.SafetyInstructions,
                     opt => opt.MapFrom(src => src.SafetyInstructions.Select(si => si.Instruction).ToList())
                 );
+            CreateMap<NfcTag, NfcTagDto>()
+                .ForMember(d => d.ChemicalItemName, options => options.MapFrom(s => s.ChemicalItem.Name));
+
+            CreateMap<ChemicalItemRequestDto, ChemicalItem>()
+                .ForMember(dest => dest.SafetyInstructions, opt => opt.MapFrom(src => src.SafetyInstructions.Select(instr => new SafetyInstruction { Instruction = instr })));
         }
     }
 }
