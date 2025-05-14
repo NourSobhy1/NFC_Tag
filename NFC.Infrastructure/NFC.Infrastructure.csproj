@@ -18,4 +18,9 @@
     <ProjectReference Include="..\NFC.Application\NFC.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="identity\configration\" />
+    <Folder Include="identity\dataseed\" />
+  </ItemGroup>
+
 </Project>
