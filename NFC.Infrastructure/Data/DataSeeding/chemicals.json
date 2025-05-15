@@ -1,0 +1,77 @@
+﻿[
+  {
+    "name": "Sulfuric Acid",
+    "tradeName": "Battery Acid",
+    "chemicalFormula": "H2SO4",
+    "casnumber": "7664-93-9",
+    "manufacturer": "Sigma-Aldrich",
+    "storageInstruction": "Store in a cool, dry, well-ventilated area away from incompatible substances.",
+    "disposalmethod": "Neutralize with a base and dispose according to local regulations.",
+    "imageUrl": "/images/sulfuric_acid.jpg",
+    "boilingPoint": 337,
+    "meltingPoint": 10,
+    "density": 1.84,
+    "specialWarning": "Corrosive to metals and tissue. Handle with care.",
+    "solubility": "Soluble in water",
+    "safetyInstructions": [
+      { "instruction": "Wear chemical-resistant gloves." },
+      { "instruction": "Use with proper ventilation." }
+    ]
+  },
+  {
+    "name": "Ethanol",
+    "tradeName": "Ethyl Alcohol",
+    "chemicalFormula": "C2H5OH",
+    "casnumber": "64-17-5",
+    "manufacturer": "Merck",
+    "storageInstruction": "Keep container tightly closed in a cool, well-ventilated place.",
+    "disposalmethod": "Dispose via licensed chemical waste disposal contractor.",
+    "imageUrl": "/images/ethanol.jpg",
+    "boilingPoint": 78.37,
+    "meltingPoint": -114.1,
+    "density": 0.789,
+    "specialWarning": "Highly flammable liquid and vapor.",
+    "solubility": "Miscible with water",
+    "safetyInstructions": [
+      { "instruction": "Keep away from heat/sparks/open flames." },
+      { "instruction": "Avoid breathing vapors." }
+    ]
+  },
+  {
+    "name": "Sodium Chloride",
+    "tradeName": "Table Salt",
+    "chemicalFormula": "NaCl",
+    "casnumber": "7647-14-5",
+    "manufacturer": "Fisher Scientific",
+    "storageInstruction": "Store in a dry, cool place.",
+    "disposalmethod": "Dispose in accordance with local regulations.",
+    "imageUrl": "/images/sodium_chloride.jpg",
+    "boilingPoint": 1465,
+    "meltingPoint": 801,
+    "density": 2.165,
+    "specialWarning": null,
+    "solubility": "Soluble in water",
+    "safetyInstructions": [
+      { "instruction": "Avoid contact with eyes." }
+    ]
+  },
+  {
+    "name": "Hydrogen Peroxide",
+    "tradeName": "Peroxide",
+    "chemicalFormula": "H2O2",
+    "casnumber": "7722-84-1",
+    "manufacturer": "Loba Chemie",
+    "storageInstruction": "Store in a tightly closed container in a cool, dark area.",
+    "disposalmethod": "Dilute with water and flush down the drain if permitted.",
+    "imageUrl": "/images/hydrogen_peroxide.jpg",
+    "boilingPoint": 150.2,
+    "meltingPoint": -0.43,
+    "density": 1.45,
+    "specialWarning": "Strong oxidizer; may cause burns.",
+    "solubility": "Completely miscible in water",
+    "safetyInstructions": [
+      { "instruction": "Handle with gloves and eye protection." },
+      { "instruction": "Avoid contact with combustible materials." }
+    ]
+  }
+]
