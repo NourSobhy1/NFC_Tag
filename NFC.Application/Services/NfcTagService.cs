@@ -21,15 +21,24 @@ namespace NFC.Application.Services
             await _tagRepo.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(Guid id)
+        {
+            var tag = await _tagRepo.GetByIdAsync(id);
+            if (tag == null)
+                throw new NotFoundException("NFC tag not found ");
+            _tagRepo.Delete(tag);
+            await _tagRepo.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<NfcTagDto>> GetAllAsync()
         {
-            var tags = await _tagRepo.GetAllAsync(asNoTracking: true);
+            var tags = await _tagRepo.GetAllWithIncludesAsync(t => t.ChemicalItem);
             return tags.Select(tag => _mapper.Map<NfcTagDto>(tag));
         }
 
         public async Task<NfcTagDto?> GetByIdAsync(Guid id)
         {
-            var tag = await _tagRepo.GetByIdAsync(id);
+            var tag = await _tagRepo.GetByIdWithIncludesAsync(id , t => t.ChemicalItem);
             if(tag== null)
               throw new NotFoundException("NFC Tag Not Found ");
             var dto = _mapper.Map<NfcTagDto>(tag);
@@ -42,17 +51,17 @@ namespace NFC.Application.Services
             if (tag == null || tag.ChemicalItemId == null)
                 throw new NotFoundException("No chemical item associated with this tag");
 
-            var chemical = await _chemicalRepo.GetByIdAsync(tag.ChemicalItemId.Value);
+            //var chemical = await _chemicalRepo.GetByIdAsync(tag.ChemicalItemId.Value);
 
-            if (chemical == null)
-                throw new NotFoundException("Chemical Item not found");
+            //if (chemical == null)
+            //    throw new NotFoundException("Chemical Item not found");
 
-            return _mapper.Map<ChemicalItemResultDto>(chemical);
+            return _mapper.Map<ChemicalItemResultDto>(tag.ChemicalItem);
         }
 
         public async Task<NfcTagDto> UpdateAsync(NfcTagDto tagDto)
         {
-            var tag = await _tagRepo.GetByIdAsync(tagDto.Id);
+            var tag = await _tagRepo.GetByIdWithIncludesAsync(tagDto.Id , t => t.ChemicalItem);
             if (tag == null)
                 throw new NotFoundException("NFC tag not found ");
             tag.UId = tagDto.UId;

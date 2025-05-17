@@ -29,17 +29,40 @@ namespace NFC.Infrastructure.Data.DataSeeding
                 if (!_dbContext.ChemicalItems.Any())
                 {
                     var chemicalsData = await File.ReadAllTextAsync(@"..\NFC.Infrastructure\Data\DataSeeding\chemicals.json");
-                    var Chemical = JsonSerializer.Deserialize<List<ChemicalItem>>(chemicalsData);
+                    var Chemical = JsonSerializer.Deserialize<List<ChemicalItem>>(chemicalsData, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
                     if(Chemical is not null && Chemical.Any())
                     {
                         await _dbContext.AddRangeAsync(Chemical);
                         await _dbContext.SaveChangesAsync();
                     }
                 }
+
+                if (!_dbContext.NfcTags.Any())
+                {
+                    var tag1 = new NfcTag
+                    {
+                        Id = Guid.NewGuid(),
+                        UId = "UID123456789",
+                        ChemicalItemId = null
+                    };
+
+                    var tag2 = new NfcTag
+                    {
+                        Id = Guid.NewGuid(),
+                        UId = "UID987654321",
+                        ChemicalItemId = Guid.Parse("bce5e54b-d3d7-4c63-10eb-08dd93db614e")
+                    };
+
+                    await _dbContext.NfcTags.AddRangeAsync(tag1, tag2);
+                    await _dbContext.SaveChangesAsync();
+                }
             }
             catch(Exception ex)
             {
-
+                Console.WriteLine($"seeding error: {ex.Message}");
             }
         }
     }

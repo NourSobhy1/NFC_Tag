@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -8,17 +9,19 @@ using NFC.Application.Interfaces;
 using NFC.Application.Interfaces.IServices;
 using NFC.Application.MappingProfiles;
 using NFC.Application.Services;
+using NFC.Domain.Models.Identity;
 using NFC.Infrastructure.Data;
 using NFC.Infrastructure.Data.DataSeeding;
 using NFC.Infrastructure.identity;
 using NFC.Infrastructure.Repository;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NFC_Tag
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -37,9 +40,12 @@ namespace NFC_Tag
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnectionString"));
             });
-			
 
-			builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppIdentityDbcontext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<INfcTagRepository, NfcTagRepository>();
             builder.Services.AddScoped<INfcTagService, NfcTagService>();
             builder.Services.AddScoped<IChemicalItemService, ChemicalItemService>();
@@ -114,7 +120,7 @@ namespace NFC_Tag
 			using (var scope = app.Services.CreateScope())
 			{
 				var dbinitializer = scope.ServiceProvider.GetRequiredService<IDbIntializer>();
-				dbinitializer.IntializerAsync();
+				await dbinitializer.IntializerAsync();
 			} 
 			#endregion
 

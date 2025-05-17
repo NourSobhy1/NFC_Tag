@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NFC.Application.DTOs;
 using NFC.Application.Interfaces.IServices;
@@ -6,11 +7,13 @@ using NFC.Application.Services;
 
 namespace NFC_Tag.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ChemicalItemController(IChemicalItemService _itemService) : ControllerBase
     {
         [HttpPost]
+        
         public async Task<IActionResult> Add(ChemicalItemRequestDto dto)
         {
             var id = await _itemService.AddAsync(dto);
@@ -18,6 +21,7 @@ namespace NFC_Tag.Controllers
         }
 
         [HttpPut]
+        
         public async Task<IActionResult> UpdateChemicalItem(ChemicalItemResultDto dto)
         {
             await _itemService.UpdateAsync(dto);
@@ -26,6 +30,7 @@ namespace NFC_Tag.Controllers
         }
 
         [HttpGet]
+        
         public async Task<IActionResult> GetAll()
         {
             var items = await _itemService.GetAllAsync();
@@ -33,6 +38,7 @@ namespace NFC_Tag.Controllers
         }
 
         [HttpGet("{id}")]
+        
         public async Task<IActionResult> GetById(Guid id)
         {
             var item = await _itemService.GetByIdAsync(id);
@@ -40,6 +46,7 @@ namespace NFC_Tag.Controllers
         }
 
         [HttpDelete("{id}")]
+        
         public async Task<IActionResult> Delete(Guid id)
         {
             await _itemService.DeleteAsync(id);

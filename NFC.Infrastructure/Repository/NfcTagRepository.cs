@@ -23,6 +23,8 @@ namespace NFC.Infrastructure.Repository
         public async Task<NfcTag?> GetByUIdAsync(string uid)
         {
             return await _context.NfcTags
+            .Include(t => t.ChemicalItem)  
+            .ThenInclude(c => c.SafetyInstructions)
             .AsNoTracking()
             .FirstOrDefaultAsync(t => t.UId == uid);
         }

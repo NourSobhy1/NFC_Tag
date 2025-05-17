@@ -23,6 +23,11 @@ namespace NFC.Application.MappingProfiles
 
             CreateMap<ChemicalItemRequestDto, ChemicalItem>()
                 .ForMember(dest => dest.SafetyInstructions, opt => opt.MapFrom(src => src.SafetyInstructions.Select(instr => new SafetyInstruction { Instruction = instr })));
+
+            CreateMap<ChemicalItemResultDto, ChemicalItem>()
+                .ForMember(dest => dest.SafetyInstructions, opt => opt.Ignore());
+
+            CreateMap<NfcTagRequestDto, NfcTag>();
         }
     }
 }

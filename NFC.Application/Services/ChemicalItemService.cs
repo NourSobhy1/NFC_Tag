@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using NFC.Application.DTOs;
 using NFC.Application.Exceptions;
 using NFC.Application.Interfaces;
@@ -17,17 +18,7 @@ namespace NFC.Application.Services
         public async Task<Guid> AddAsync(ChemicalItemRequestDto itemDto)
         {
             var chemicalitem = _mapper.Map<ChemicalItem>(itemDto);
-            if(itemDto.SafetyInstructions != null &&itemDto.SafetyInstructions.Any())
-            {
-                foreach(var instruction in itemDto.SafetyInstructions)
-                {
-                    chemicalitem.SafetyInstructions.Add(new SafetyInstruction
-                    {
-                        Instruction = instruction,
-                        ChemicalItemId = chemicalitem.Id
-                    });
-                }
-            }
+            
             await _chemicalRepo.AddAsync(chemicalitem);
             await _chemicalRepo.SaveChangesAsync();
             return chemicalitem.Id;
@@ -44,13 +35,13 @@ namespace NFC.Application.Services
 
         public async Task<IEnumerable<ChemicalItemResultDto>> GetAllAsync()
         {
-            var chemicalitems = await _chemicalRepo.GetAllAsync();
+            var chemicalitems = await _chemicalRepo.GetAllWithIncludesAsync(c => c.SafetyInstructions);
             return _mapper.Map<IEnumerable<ChemicalItemResultDto>>(chemicalitems);
         }
 
         public async Task<ChemicalItemResultDto?> GetByIdAsync(Guid id)
         {
-            var chemicalitem = await _chemicalRepo.GetByIdAsync(id);
+            var chemicalitem = await _chemicalRepo.GetByIdWithIncludesAsync(id, c => c.SafetyInstructions);
             if (chemicalitem == null)
                 throw new NotFoundException("Chemical item not found");
             return _mapper.Map<ChemicalItemResultDto>(chemicalitem);

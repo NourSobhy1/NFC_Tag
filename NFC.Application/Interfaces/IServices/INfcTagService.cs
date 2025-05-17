@@ -14,6 +14,7 @@ namespace NFC.Application.Interfaces.IServices
         Task<IEnumerable<NfcTagDto>> GetAllAsync();
         Task AddAsync(NfcTagRequestDto tagDto);
         Task<NfcTagDto> UpdateAsync(NfcTagDto tagDto);
+        Task DeleteAsync(Guid id);
 
     }
 }

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NFC.Application.DTOs;
 using NFC.Application.Interfaces.IServices;
 
 namespace NFC_Tag.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class NfcTagController : ControllerBase
@@ -32,6 +34,7 @@ namespace NFC_Tag.Controllers
         }
 
         [HttpGet("Chemical-by-Uid/{uid}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetChemicalItemByUid(string uid)
         {
             var chemicalItem = await _nfcTagService.GetChemicalItemByUIdAsync(uid);
@@ -44,6 +47,21 @@ namespace NFC_Tag.Controllers
             await _nfcTagService.AddAsync(tagDto);
             return Ok("Added Successfully");
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] NfcTagDto tagDto)
+        {
+            var updatedTag = await _nfcTagService.UpdateAsync(tagDto);
+            return Ok(updatedTag);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _nfcTagService.DeleteAsync(id);
+            return Ok("Deleted Successfully");
+        }
+
 
     }
 }
