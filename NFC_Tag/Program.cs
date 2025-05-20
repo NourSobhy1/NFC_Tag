@@ -25,6 +25,15 @@ namespace NFC_Tag
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins("http://127.0.0.1:5501")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -121,13 +130,14 @@ namespace NFC_Tag
 			{
 				var dbinitializer = scope.ServiceProvider.GetRequiredService<IDbIntializer>();
 				await dbinitializer.IntializerAsync();
-			} 
-			#endregion
+			}
+            #endregion
 
-			// Configure the HTTP request pipeline.
-			//if (app.Environment.IsDevelopment())
-   //         {
-                app.UseSwagger();
+            app.UseCors("AllowFrontend");
+            // Configure the HTTP request pipeline.
+            //if (app.Environment.IsDevelopment())
+            //         {
+            app.UseSwagger();
                 app.UseSwaggerUI();
 			//}
 
