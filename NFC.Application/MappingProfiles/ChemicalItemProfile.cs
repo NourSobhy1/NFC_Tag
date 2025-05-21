@@ -17,10 +17,10 @@ namespace NFC.Application.MappingProfiles
                 .ForMember(
                     dest => dest.SafetyInstructions,
                     opt => opt.MapFrom(src => src.SafetyInstructions.Select(si => si.Instruction).ToList())
-                )
-                .ForMember(dest => dest.ImageUrl,
-                           opt => opt.MapFrom<ImageUrlResolver>()
                 );
+                //.ForMember(dest => dest.ImageUrl,
+                //           opt => opt.MapFrom<ImageUrlResolver>()
+                //);
             //BaseUrl/images/sulfuric_acid.jpg
 
             CreateMap<NfcTag, NfcTagDto>()
