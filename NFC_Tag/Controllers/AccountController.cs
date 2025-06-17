@@ -15,33 +15,47 @@ namespace NFC_Tag.Controllers
 	{
 		private readonly IConfiguration _configuration;
 		private readonly UserManager<ApplicationUser> userManager;
-		
+		private readonly RoleManager<IdentityRole> roleManager;
 
-		public AccountController(UserManager<ApplicationUser> userManager,IConfiguration configuration)
+		public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
 		{
 			_configuration = configuration;
 			this.userManager = userManager;
-			
+			this.roleManager = roleManager;
+
 		}
 		[HttpPost("Register")]
 		public async Task<IActionResult> Register(RegisterDTO UserDto)
 		{
 			if (ModelState.IsValid)
 			{
-				//user manger who save data so do inject to user manger
-				ApplicationUser user = new ApplicationUser();//crat take appuser so we binding Dto in app user
-				user.UserName = UserDto.UserName;
+				// إنشاء مستخدم جديد
+				ApplicationUser user = new ApplicationUser
+				{
+					UserName = UserDto.UserName
+				};
 
+				// إنشاء المستخدم
 				IdentityResult result = await userManager.CreateAsync(user, UserDto.Password);
 				if (result.Succeeded)
 				{
-					return Ok("account add");
+					// التحقق من وجود الدور (لو مش موجود بننشئه)
+					if (!await roleManager.RoleExistsAsync(UserDto.RoleName))
+					{
+						await roleManager.CreateAsync(new IdentityRole(UserDto.RoleName));
+					}
+
+					// إضافة المستخدم للدور المحدد
+					await userManager.AddToRoleAsync(user, UserDto.RoleName);
+
+					return Ok($"Account created and assigned to role: {UserDto.RoleName}");
 				}
+
+				// إرجاع أول خطأ لو فشل التسجيل
 				return BadRequest(result.Errors.FirstOrDefault());
 			}
 
 			return BadRequest(ModelState);
-
 		}
 		[HttpPost("login")]
 		public async Task<IActionResult> Login(LoginDTO userDto)

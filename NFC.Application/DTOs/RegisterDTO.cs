@@ -16,5 +16,8 @@ namespace NFC.Application.DTOs
 		[Required]
 		[Compare("Password")]
 		public string ConfirmPassword { get; set; }
-	}
+		[Required]
+		public string RoleName { get; set; } // New: to choose role (Admin, User, etc.)
+	
+    }
 }
