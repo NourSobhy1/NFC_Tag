@@ -1,15 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35806.99 d17.13
+VisualStudioVersion = 17.13.35806.99
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFC_Tag", "NFC_Tag\NFC_Tag.csproj", "{322DD4D3-F2E4-48B4-BF48-7FBFD09BB32D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFC_Tag", "NFC_Tag\NFC_Tag.csproj", "{322DD4D3-F2E4-48B4-BF48-7FBFD09BB32D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFC.Domain", "NFC.Domain\NFC.Domain.csproj", "{83BF2F15-3C8F-4352-A51F-3E675A736B97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFC.Domain", "NFC.Domain\NFC.Domain.csproj", "{83BF2F15-3C8F-4352-A51F-3E675A736B97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFC.Application", "NFC.Application\NFC.Application.csproj", "{6EC65C59-EECA-4337-AB13-5E10097BC2E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFC.Application", "NFC.Application\NFC.Application.csproj", "{6EC65C59-EECA-4337-AB13-5E10097BC2E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFC.Infrastructure", "NFC.Infrastructure\NFC.Infrastructure.csproj", "{0A96883A-831F-4D2E-A6E0-83ED4F8CFEA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFC.Infrastructure", "NFC.Infrastructure\NFC.Infrastructure.csproj", "{0A96883A-831F-4D2E-A6E0-83ED4F8CFEA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFCREader", "NFCREader\NFCREader.csproj", "{5312EE0A-21E7-4223-B6DF-930285E7D7B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0A96883A-831F-4D2E-A6E0-83ED4F8CFEA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A96883A-831F-4D2E-A6E0-83ED4F8CFEA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A96883A-831F-4D2E-A6E0-83ED4F8CFEA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5312EE0A-21E7-4223-B6DF-930285E7D7B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5312EE0A-21E7-4223-B6DF-930285E7D7B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5312EE0A-21E7-4223-B6DF-930285E7D7B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5312EE0A-21E7-4223-B6DF-930285E7D7B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
