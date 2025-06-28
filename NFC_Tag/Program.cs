@@ -64,6 +64,7 @@ namespace NFC_Tag
             builder.Services.AddScoped<IChemicalItemService, ChemicalItemService>();
             builder.Services.AddScoped<IDbIntializer, DbIntializer>();
             builder.Services.AddScoped<IChatService, ChatService>();
+			builder.Services.AddScoped<IEmailSender, EmailSender>();
 
             builder.Services.AddAutoMapper(typeof(ChemicalItemProfile).Assembly);
 			//[authorize]to use jwt insted of cookie

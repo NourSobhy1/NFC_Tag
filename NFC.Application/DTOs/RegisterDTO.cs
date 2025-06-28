@@ -11,7 +11,12 @@ namespace NFC.Application.DTOs
 	{
 		[Required]
 		public string UserName { get; set; }
-		[Required]
+
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email format")]
+        public string Email { get; set; }
+
+        [Required]
 		public string Password { get; set; }
 		[Required]
 		[Compare("Password")]
