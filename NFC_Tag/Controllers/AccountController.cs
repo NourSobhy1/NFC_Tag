@@ -94,7 +94,9 @@ namespace NFC_Tag.Controllers
 				        	issuer: _configuration["jwt:ValidIssuer"],
 				            audience: _configuration["jwt:ValidAudiance"],
 					        claims: claims,
-						    expires: DateTime.Now.AddHours(1),
+						    expires: userDto.RememberMe
+							? DateTime.Now.AddDays(7)
+                            : DateTime.Now.AddHours(1),
 					        signingCredentials: signcread
 
 							);
