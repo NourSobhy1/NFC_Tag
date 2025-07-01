@@ -9,6 +9,6 @@ namespace NFC.Application.DTOs
    public class NfcTagRequestDto
     {
         public string UId { get; set; } = String.Empty;
-        public Guid? ChemicalItemId { get; set; }
+        public Guid ChemicalItemId { get; set; }
     }
 }

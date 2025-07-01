@@ -32,8 +32,9 @@ namespace NFC_Tag
                 {
                     policy.WithOrigins(
                         "https://touchgo2.netlify.app",
-                        "http://127.0.0.1:5503"
-						)
+                        "http://127.0.0.1:5503",
+                        "https://2resetpassword.netlify.app"
+                        )
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                 });
