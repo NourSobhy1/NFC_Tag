@@ -11,6 +11,7 @@ using NFC.Application.MappingProfiles;
 using NFC.Application.Services;
 using NFC.Domain.Models.Identity;
 using NFC.Infrastructure.Data;
+using NFC.Infrastructure.Data.Configurations;
 using NFC.Infrastructure.Data.DataSeeding;
 using NFC.Infrastructure.identity;
 using NFC.Infrastructure.Repository;
@@ -25,6 +26,18 @@ namespace NFC_Tag
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins(
+                        "https://touchgo2.netlify.app",
+                        "http://127.0.0.1:5503"
+						)
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -50,6 +63,8 @@ namespace NFC_Tag
             builder.Services.AddScoped<INfcTagService, NfcTagService>();
             builder.Services.AddScoped<IChemicalItemService, ChemicalItemService>();
             builder.Services.AddScoped<IDbIntializer, DbIntializer>();
+            builder.Services.AddScoped<IChatService, ChatService>();
+			builder.Services.AddScoped<IEmailSender, EmailSender>();
 
             builder.Services.AddAutoMapper(typeof(ChemicalItemProfile).Assembly);
 			//[authorize]to use jwt insted of cookie
@@ -115,22 +130,38 @@ namespace NFC_Tag
 					}
 				});
 			});
-			var app = builder.Build();
+
+            //openroutersettings
+            builder.Services.Configure<OpenRouterSettings>(
+            builder.Configuration.GetSection("OpenRouter"));
+
+            builder.Services.AddHttpClient("OpenRouterClient", (sp, client) =>
+            {
+                var settings = sp.GetRequiredService<IOptions<OpenRouterSettings>>().Value;
+                client.BaseAddress = new Uri(settings.BaseUrl);
+                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {settings.ApiKey}");
+                client.DefaultRequestHeaders.Add("HTTP-Referer", "https://touchgo2.netlify.app");
+                client.DefaultRequestHeaders.Add("X-Title", "Touch Go");
+            });
+
+            var app = builder.Build();
 
 			using (var scope = app.Services.CreateScope())
 			{
 				var dbinitializer = scope.ServiceProvider.GetRequiredService<IDbIntializer>();
 				await dbinitializer.IntializerAsync();
-			} 
-			#endregion
+			}
+            #endregion
 
-			// Configure the HTTP request pipeline.
-			if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
+            app.UseCors("AllowFrontend");
+            // Configure the HTTP request pipeline.
+            //if (app.Environment.IsDevelopment())
+            //         {
+            app.UseSwagger();
                 app.UseSwaggerUI();
-            }
+			//}
 
+			app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
