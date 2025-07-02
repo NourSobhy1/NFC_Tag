@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NFC.Application.DTOs;
 using NFC.Application.Interfaces.IServices;
+using System.Security.Claims;
 
 namespace NFC_Tag.Controllers
 {

@@ -12,11 +12,12 @@ using System.Threading.Tasks;
 
 namespace NFC.Application.Services
 {
-    public class NfcTagService(INfcTagRepository _tagRepo,IGenericRepository<ChemicalItem> _chemicalRepo ,IMapper _mapper) : INfcTagService
+    public class NfcTagService(INfcTagRepository _tagRepo,IGenericRepository<ChemicalItem> _chemicalRepo ,IMapper _mapper, ICurrentUserService _currentUserService) : INfcTagService
     {
         public async Task AddAsync(NfcTagRequestDto tagDto)
         {
             var tag = _mapper.Map<NfcTag>(tagDto);
+            tag.AdminId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
             await _tagRepo.AddAsync(tag);
             await _tagRepo.SaveChangesAsync();
         }
@@ -33,7 +34,8 @@ namespace NFC.Application.Services
         public async Task<IEnumerable<NfcTagDto>> GetAllAsync()
         {
             var tags = await _tagRepo.GetAllWithIncludesAsync(t => t.ChemicalItem);
-            return tags.Select(tag => _mapper.Map<NfcTagDto>(tag));
+            var filtered = tags.Where(item => item.AdminId == _currentUserService.UserId).ToList();
+            return filtered.Select(tag => _mapper.Map<NfcTagDto>(tag));
         }
 
         public async Task<NfcTagDto?> GetByIdAsync(Guid id)

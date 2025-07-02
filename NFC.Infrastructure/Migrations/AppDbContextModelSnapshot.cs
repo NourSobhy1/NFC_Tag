@@ -28,6 +28,10 @@ namespace NFC.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AdminId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("BoilingPoint")
                         .HasPrecision(10, 4)
                         .HasColumnType("decimal(10,4)");
@@ -88,6 +92,10 @@ namespace NFC.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AdminId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ChemicalItemId")
                         .HasColumnType("uniqueidentifier");
