@@ -22,5 +22,6 @@ namespace NFC.Application.DTOs
         public string? SpecialWarning { get; set; }
         public string? Solubility { get; set; }
         public List<string> SafetyInstructions { get; set; } = new();
+        
     }
 }

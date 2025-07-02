@@ -14,6 +14,7 @@ namespace NFC.Domain.Models
         public string UId { get; set; } = String.Empty;
         public Guid? ChemicalItemId { get; set; }
         public ChemicalItem? ChemicalItem { get; set; }
+        public string AdminId { get; set; } = string.Empty;
 
     }
 }

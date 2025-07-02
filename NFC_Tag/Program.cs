@@ -15,6 +15,7 @@ using NFC.Infrastructure.Data.Configurations;
 using NFC.Infrastructure.Data.DataSeeding;
 using NFC.Infrastructure.identity;
 using NFC.Infrastructure.Repository;
+using NFC.Infrastructure.Services;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,8 +33,9 @@ namespace NFC_Tag
                 {
                     policy.WithOrigins(
                         "https://touchgo2.netlify.app",
-                        "http://127.0.0.1:5503"
-						)
+                        "http://127.0.0.1:5503",
+                        "https://2resetpassword.netlify.app"
+                        )
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                 });
@@ -58,6 +60,8 @@ namespace NFC_Tag
                 .AddEntityFrameworkStores<AppIdentityDbcontext>()
                 .AddDefaultTokenProviders();
 
+            builder.Services.AddHttpContextAccessor();
+
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<INfcTagRepository, NfcTagRepository>();
             builder.Services.AddScoped<INfcTagService, NfcTagService>();
@@ -65,6 +69,7 @@ namespace NFC_Tag
             builder.Services.AddScoped<IDbIntializer, DbIntializer>();
             builder.Services.AddScoped<IChatService, ChatService>();
 			builder.Services.AddScoped<IEmailSender, EmailSender>();
+            builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             builder.Services.AddAutoMapper(typeof(ChemicalItemProfile).Assembly);
 			//[authorize]to use jwt insted of cookie
