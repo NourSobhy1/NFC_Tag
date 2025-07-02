@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace NFC.Application.Services
 {
-    public class ChemicalItemService(IGenericRepository<ChemicalItem> _chemicalRepo, IMapper _mapper) : IChemicalItemService
+    public class ChemicalItemService(IGenericRepository<ChemicalItem> _chemicalRepo, IMapper _mapper, ICurrentUserService _currentUserService) : IChemicalItemService
     {
         public async Task<Guid> AddAsync(ChemicalItemRequestDto itemDto)
         {
             var chemicalitem = _mapper.Map<ChemicalItem>(itemDto);
-            
+            chemicalitem.AdminId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
             await _chemicalRepo.AddAsync(chemicalitem);
             await _chemicalRepo.SaveChangesAsync();
             return chemicalitem.Id;
@@ -36,7 +36,8 @@ namespace NFC.Application.Services
         public async Task<IEnumerable<ChemicalItemResultDto>> GetAllAsync()
         {
             var chemicalitems = await _chemicalRepo.GetAllWithIncludesAsync(c => c.SafetyInstructions);
-            return _mapper.Map<IEnumerable<ChemicalItemResultDto>>(chemicalitems);
+            var filtered = chemicalitems.Where(item => item.AdminId == _currentUserService.UserId).ToList();
+            return _mapper.Map<IEnumerable<ChemicalItemResultDto>>(filtered);
         }
 
         public async Task<ChemicalItemResultDto?> GetByIdAsync(Guid id)

@@ -10,5 +10,6 @@ namespace NFC.Application.DTOs
     {
         public string UId { get; set; } = String.Empty;
         public Guid ChemicalItemId { get; set; }
+       
     }
 }

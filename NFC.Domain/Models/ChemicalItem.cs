@@ -26,6 +26,7 @@ namespace NFC.Domain.Models
         public decimal Density { get; set; }
         public string? SpecialWarning { get; set; }
         public string? Solubility { get; set; }
+        public string AdminId { get; set; } = string.Empty;
 
 
         //Navigetional Property
