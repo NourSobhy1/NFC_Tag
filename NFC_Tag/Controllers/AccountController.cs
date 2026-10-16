@@ -122,7 +122,7 @@ namespace NFC_Tag.Controllers
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
             var encodedToken = HttpUtility.UrlEncode(token);
 
-            var resetLink = $"https://touchgo-client/reset-password?email={dto.Email}&token={encodedToken}";
+            var resetLink = $"https://2resetpassword.netlify.app/?email={dto.Email}&token={encodedToken}";
 
             await _emailSender.SendEmailAsync(
               dto.Email,
